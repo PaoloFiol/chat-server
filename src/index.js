@@ -4,6 +4,7 @@ const path = require('path');
 const WebSocket = require('ws');
 const cors = require('cors');
 const { nanoid } = require('nanoid');
+const http = require('http');
 
 const NANOID_LENGTH = 10;
 
@@ -72,7 +73,8 @@ app.get('*', function(req, res){
     res.sendFile(CLIENT_PATH);
 });
 
-const wss = new WebSocket.Server({ server: app });
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
 
 wss.on('connection', function(ws) {
     const [username, roomId] = decodeURIComponent(ws.protocol).split(',');
