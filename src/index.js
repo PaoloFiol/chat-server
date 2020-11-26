@@ -14,6 +14,9 @@ const rooms = {
         users: [] // empty by default
     }
 };
+app.get('/', function(req, res){
+    res.sendFile('public/index.html');
+});
 
 app.get('/create_room', function(req, res) {
     const roomId = nanoid(NANOID_LENGTH);
@@ -57,6 +60,10 @@ app.get('/check_if_username_exists', function(req, res) {
     } else {
         res.json({ alreadyExists: false });
     }
+});
+
+app.get('*', function(req, res){
+    res.sendFile('public/index.html');
 });
 
 const wss = new WebSocket.Server({ server: app });
