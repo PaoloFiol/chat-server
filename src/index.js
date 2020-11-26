@@ -115,6 +115,8 @@ wss.on('connection', function(ws) {
     });
 });
 
-app.listen(config.server.port, function() {
-    console.log(`Chat Server is listening at port ${config.server.port}...`);
-});
+//app.listen(config.server.port, function() {
+  //  console.log(`Chat Server is listening at port ${config.server.port}...`);
+//});
+
+server.listen(config.server.port);
