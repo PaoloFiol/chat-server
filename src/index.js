@@ -2,7 +2,6 @@ const config = require('../config');
 const express = require('express');
 const WebSocket = require('ws');
 const cors = require('cors');
-const wss = new WebSocket.Server({ port: config.server.websocketPort });
 const { nanoid } = require('nanoid');
 
 const NANOID_LENGTH = 10;
@@ -59,6 +58,8 @@ app.get('/check_if_username_exists', function(req, res) {
         res.json({ alreadyExists: false });
     }
 });
+
+const wss = new WebSocket.Server({ server: app });
 
 wss.on('connection', function(ws) {
     const [username, roomId] = decodeURIComponent(ws.protocol).split(',');
