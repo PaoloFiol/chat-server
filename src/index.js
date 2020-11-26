@@ -1,10 +1,13 @@
 const config = require('../config');
 const express = require('express');
+const path = require('path');
 const WebSocket = require('ws');
 const cors = require('cors');
 const { nanoid } = require('nanoid');
 
 const NANOID_LENGTH = 10;
+
+const CLIENT_PATH = path.join(__dirname, 'public/index.html');
 
 const app = express();
 app.use(cors());
@@ -14,8 +17,11 @@ const rooms = {
         users: [] // empty by default
     }
 };
+
+app.use('/bundles', express.static(path.join(__dirname, 'public/bundles')));
+
 app.get('/', function(req, res){
-    res.sendFile('public/index.html');
+    res.sendFile(CLIENT_PATH);
 });
 
 app.get('/create_room', function(req, res) {
@@ -63,7 +69,7 @@ app.get('/check_if_username_exists', function(req, res) {
 });
 
 app.get('*', function(req, res){
-    res.sendFile('public/index.html');
+    res.sendFile(CLIENT_PATH);
 });
 
 const wss = new WebSocket.Server({ server: app });
